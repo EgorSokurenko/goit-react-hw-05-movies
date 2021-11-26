@@ -1,0 +1,13 @@
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+.link {
+  font-size: 20px;
+  color: black;
+}
+.active-link {
+  font-size: 23px;
+  color: rgb(255, 100, 100);
+}
