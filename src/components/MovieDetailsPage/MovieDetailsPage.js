@@ -16,9 +16,7 @@ export default function MovieDetailsPage() {
     }
     getFilms.DetalFilm(movieId).then(setFilm);
   }, [movieId]);
-  {
-    console.log(film);
-  }
+
   return (
     <div>
       <div className="img-block">

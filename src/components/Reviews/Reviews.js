@@ -20,5 +20,5 @@ export default function Reviews({ id }) {
   );
 }
 Reviews.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
 };

@@ -30,5 +30,5 @@ export default function Cast({ id }) {
   );
 }
 Cast.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
 };
