@@ -1,24 +1,26 @@
 import { useState, useEffect } from "react";
 import React, { lazy, Suspense } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import GetFilms from "../../Api";
-const Cast = lazy(() => import("../Cast"));
+const Cast = lazy(() => import("../Cast/Cast"));
 const Reviews = lazy(() => import("../Reviews"));
 const getFilms = new GetFilms();
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [film, setFilm] = useState("");
-
+  const location = useLocation();
+  console.log(location);
   useEffect(() => {
     if (!movieId) {
       return;
     }
-    getFilms.DetalFilm(movieId).then(setFilm);
+    getFilms.DetalFilm(movieId).then(setFilm).catch(console.log);
   }, [movieId]);
 
   return (
     <div>
+      <Link to="../movies">GoBack</Link>
       <div className="img-block">
         <img
           width="300"

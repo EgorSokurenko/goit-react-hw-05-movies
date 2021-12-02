@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import GetFilms from "../../Api";
+import Movies from "../../components/Movies/movies";
 const getFilms = new GetFilms();
 export default function HomePage() {
   const [movies, setMovies] = useState(null);
@@ -8,21 +9,13 @@ export default function HomePage() {
     getFilms
       .getTrending()
       .then((r) => r.results)
-      .then(setMovies);
+      .then(setMovies)
+      .catch(console.log);
   }, []);
   return (
     <>
       <h2>TrendMovies</h2>
-      <ul>
-        {movies &&
-          movies.map((movie) => {
-            return (
-              <li key={movie.id}>
-                <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-              </li>
-            );
-          })}
-      </ul>
+      {movies && <Movies movies={movies} />}
     </>
   );
 }

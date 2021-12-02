@@ -1,27 +1,50 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import GetFilms from "../../Api";
+import Movies from "../../components/Movies/movies";
 const getFilms = new GetFilms();
+
+const useQueryState = (key) => {
+  console.log(window.localStorage.getItem(key));
+  const [state, setState] = useState(() => {
+    return JSON.parse(window.localStorage.getItem(key)) ?? "";
+  });
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(state));
+  }, [key, state]);
+  return [state, setState];
+};
+
 export default function MoviesPage() {
   const [value, setValue] = useState("");
   const [movies, setMovies] = useState(null);
+  const [query, setQuery] = useQueryState("query");
   let location = useLocation();
 
   useEffect(() => {
+    if (query) {
+      getFilms
+        .SearchMovies(query)
+        .then((r) => setMovies(r.results))
+        .catch(console.log);
+      return;
+    }
     if (!value) {
       setMovies([]);
       return;
     }
-  }, [value]);
+  }, [value, query]);
   const HandleChange = (e) => {
     setValue(e.target.value);
   };
   function onSubmit(e) {
     e.preventDefault();
-    console.log(location);
-    getFilms.SearchMovies(value).then((r) => setMovies(r.results));
-    location = { ...location, search: `qurey=${value}` };
-    console.log(location);
+    setQuery(value);
+    location.search = `?query=${query}`;
+    getFilms
+      .SearchMovies(value)
+      .then((r) => setMovies(r.results))
+      .catch(console.log);
   }
   return (
     <>
@@ -33,21 +56,12 @@ export default function MoviesPage() {
           type="text"
           autoComplete="off"
           autoFocus
-          placeholder="Search images and photos"
+          placeholder="Search films"
         />
         <button type="submit">Search</button>
       </form>
 
-      <ul>
-        {movies &&
-          movies.map((movie) => {
-            return (
-              <li key={movie.id}>
-                <Link to={`${movie.id}`}>{movie.title}</Link>
-              </li>
-            );
-          })}
-      </ul>
+      {movies && <Movies movies={movies} />}
     </>
   );
 }
