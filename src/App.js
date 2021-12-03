@@ -1,6 +1,6 @@
 import Navigations from "./pages/Navigations";
 import React, { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 const HomePage = lazy(() => import("./pages/HomePage"));
 const MoviesPage = lazy(() => import("./pages/MoviesPage"));
 const MovieDetailsPage = lazy(() => import("./components/MovieDetailsPage"));
@@ -14,7 +14,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies/*" element={<MoviesPage />} />
           <Route path="/movies/:movieId/*" element={<MovieDetailsPage />} />
-          <Route path="/*" element={<HomePage />} />
+          <Route path="/*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </>

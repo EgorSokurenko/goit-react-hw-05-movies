@@ -1,6 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react/cjs/react.development";
 export default function Movies({ movies }) {
   const location = useLocation();
+  const navigate = useNavigate();
+  console.log(navigate);
+  if (location.pathname !== "/movies") {
+    location.pathname = "/movies";
+    return;
+  }
+
   return (
     <ul>
       {movies &&
@@ -9,8 +17,9 @@ export default function Movies({ movies }) {
             <li key={movie.id}>
               <Link
                 to={{
-                  pathname: `${movie.id}`,
-                  state: { from: location.pathname },
+                  pathname: `${location.pathname}/${movie.id}`,
+                  hash: "",
+                  state: { location },
                 }}
               >
                 {movie.title}
