@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import React, { lazy, Suspense } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import GetFilms from "../../Api";
 const Cast = lazy(() => import("../Cast/Cast"));
@@ -9,8 +9,8 @@ const getFilms = new GetFilms();
 export default function MovieDetailsPage() {
   const { movieId } = useParams();
   const [film, setFilm] = useState("");
-  const navigate = useNavigate();
-
+  const location = useLocation();
+  console.log(location);
   useEffect(() => {
     if (!movieId) {
       return;
@@ -18,49 +18,51 @@ export default function MovieDetailsPage() {
     getFilms.DetalFilm(movieId).then(setFilm).catch(console.log);
   }, [movieId]);
   function HandleClick(params) {
-    navigate("");
+    location = {
+      ...location.state.from,
+    };
   }
   return (
-    <div>
+    <>
       <button type="button" onClick={HandleClick}>
         GoBack
       </button>
-      <div className="img-block">
+      <div className="card" style={{ width: "300px" }}>
         <img
-          width="300"
-          className="poster"
           src={`https://image.tmdb.org/t/p/w342/${film.poster_path}`}
+          class="card-img-top"
+          width="120"
           alt="poster"
         />
-      </div>
-      <div className="desc">
-        <h3>{film.original_title}</h3>
-        <span>Overview</span>
-        <p>{film.overview}</p>
-        <span>Genres</span>
-        <ul>
+        <div class="card-body">
+          <h5 class="card-title">{film.original_title}</h5>
+          <p class="card-text">{film.overview}</p>
+        </div>
+        <ul class="list-group list-group-flush">
           {film.genres &&
             film.genres.map((genre) => (
-              <li key={genre.id}>
-                <span>{genre.name}</span>
+              <li key={genre.id} class="list-group-item">
+                {genre.name}
               </li>
             ))}
         </ul>
-        <hr />
+        <div class="card-body">
+          <Link class="card-link" to="cast">
+            Cast
+          </Link>
+          <Link class="card-link" to="reviews">
+            Reviews
+          </Link>
+        </div>
+        <div>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Routes>
+              <Route path={`cast`} element={<Cast id={movieId} />} />
+              <Route path={`reviews`} element={<Reviews id={movieId} />} />
+            </Routes>
+          </Suspense>
+        </div>
       </div>
-      <div>
-        <Link to="cast">Cast</Link>
-        <br />
-        <Link to="reviews">Reviews</Link>
-      </div>
-      <div>
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            <Route path={`cast`} element={<Cast id={movieId} />} />
-            <Route path={`reviews`} element={<Reviews id={movieId} />} />
-          </Routes>
-        </Suspense>
-      </div>
-    </div>
+    </>
   );
 }

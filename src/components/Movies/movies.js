@@ -1,24 +1,28 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 export default function Movies({ movies }) {
   const location = useLocation();
-  const navigate = useNavigate();
-  console.log(navigate);
   if (location.pathname !== "/movies") {
     location.pathname = "/movies";
     return;
   }
 
   return (
-    <ul>
+    <ul class="list-group">
       {movies &&
         movies.map((movie) => {
           return (
-            <li key={movie.id}>
+            <li class="list-group-item " key={movie.id}>
+              <img
+                style={{ width: "100px" }}
+                src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
+                class="card-img-top"
+                width="100"
+                alt="poster"
+              />
               <Link
                 to={{
                   pathname: `${location.pathname}/${movie.id}`,
-                  hash: "",
                   state: { location },
                 }}
               >

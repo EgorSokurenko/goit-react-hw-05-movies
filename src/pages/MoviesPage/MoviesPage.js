@@ -46,18 +46,21 @@ export default function MoviesPage() {
   }
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <input
-          onChange={HandleChange}
-          value={value}
-          className="SearchForm-input"
-          type="text"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search films"
-        />
-        <button type="submit">Search</button>
-      </form>
+      <div onSubmit={onSubmit} class="container-fluid">
+        <form class="d-flex">
+          <input
+            onChange={HandleChange}
+            value={value}
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
 
       {movies && <Movies movies={movies} />}
     </>
