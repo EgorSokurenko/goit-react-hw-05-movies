@@ -8,15 +8,15 @@ export default function Movies({ movies }) {
   }
 
   return (
-    <ul class="list-group">
+    <ul className="list-group">
       {movies &&
         movies.map((movie) => {
           return (
-            <li class="list-group-item " key={movie.id}>
+            <li className="list-group-item " key={movie.id}>
               <img
                 style={{ width: "100px" }}
                 src={`https://image.tmdb.org/t/p/w342/${movie.poster_path}`}
-                class="card-img-top"
+                className="card-img-top"
                 width="100"
                 alt="poster"
               />

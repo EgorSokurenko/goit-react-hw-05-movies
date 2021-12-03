@@ -30,27 +30,27 @@ export default function MovieDetailsPage() {
       <div className="card" style={{ width: "300px" }}>
         <img
           src={`https://image.tmdb.org/t/p/w342/${film.poster_path}`}
-          class="card-img-top"
+          className="card-img-top"
           width="120"
           alt="poster"
         />
         <div class="card-body">
-          <h5 class="card-title">{film.original_title}</h5>
-          <p class="card-text">{film.overview}</p>
+          <h5 className="card-title">{film.original_title}</h5>
+          <p className="card-text">{film.overview}</p>
         </div>
-        <ul class="list-group list-group-flush">
+        <ul className="list-group list-group-flush">
           {film.genres &&
             film.genres.map((genre) => (
-              <li key={genre.id} class="list-group-item">
+              <li key={genre.id} className="list-group-item">
                 {genre.name}
               </li>
             ))}
         </ul>
-        <div class="card-body">
-          <Link class="card-link" to="cast">
+        <div className="card-body">
+          <Link className="card-link" to="cast">
             Cast
           </Link>
-          <Link class="card-link" to="reviews">
+          <Link className="card-link" to="reviews">
             Reviews
           </Link>
         </div>

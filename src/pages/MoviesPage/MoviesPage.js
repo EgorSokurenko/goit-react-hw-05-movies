@@ -46,17 +46,17 @@ export default function MoviesPage() {
   }
   return (
     <>
-      <div onSubmit={onSubmit} class="container-fluid">
-        <form class="d-flex">
+      <div onSubmit={onSubmit} className="container-fluid">
+        <form className="d-flex">
           <input
             onChange={HandleChange}
             value={value}
-            class="form-control me-2"
+            className="form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-outline-success" type="submit">
+          <button className="btn btn-outline-success" type="submit">
             Search
           </button>
         </form>
