@@ -2,11 +2,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react/cjs/react.development";
 export default function Movies({ movies }) {
   const location = useLocation();
-  if (location.pathname !== "/movies") {
-    location.pathname = "/movies";
-    return;
-  }
-
   return (
     <ul className="list-group">
       {movies &&
@@ -21,9 +16,12 @@ export default function Movies({ movies }) {
                 alt="poster"
               />
               <Link
-                to={{
-                  pathname: `${location.pathname}/${movie.id}`,
-                  state: { location },
+                to={`${
+                  location.pathname === "/" ? "movies" : location.pathname
+                }/${movie.id}`}
+                state={{
+                  from: location,
+                  label: "goBack",
                 }}
               >
                 {movie.title}
